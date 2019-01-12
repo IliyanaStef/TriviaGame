@@ -48,7 +48,7 @@ $(document).ready(function() {
 				{text: "$25,000", isCorrect: false},
 				{text: "$125,000", isCorrect: true}
 			],
-			image: "<img class='answerImage' src='./assets/images/money.jpg'>",
+			image: "<img class='answerImage' src='./assets/images/money.png'>",
 			correctText: "$125,000",
 		},
 		{
@@ -129,7 +129,7 @@ $(document).ready(function() {
 		$(".mainArea").html(gameHTML);
 		for (var i = 0; i < questionArray[questionCounter].answers.length; i++) {
 			var answerButton = $("<button>");
-			answerButton.addClass("answer btn btn-block");
+			answerButton.addClass("answer btn btn-block btn-light");
 			answerButton.attr("isCorrect", questionArray[questionCounter].answers[i].isCorrect);
 			answerButton.html(questionArray[questionCounter].answers[i].text);
 			$(".mainArea").append(answerButton);
@@ -150,14 +150,14 @@ $(document).ready(function() {
 		}
 	}
 
-	//Function executed upon clicking of an answer button
+	//Function executed upon clicking of an answer button to evaluate if answer is correct or wrong.
 	$("body").on("click", ".answer", function(){
 		selectedAnswer = $(this).attr("isCorrect");
 
-		if (selectedAnswer === "true") { // evaluates if this is the correct answer
+		if (selectedAnswer === "true") { 
 			clearInterval(clock);
 		 	generateWin();
-		} else { 	// then it's the wrong answer
+		} else { 	
 			clearInterval(clock);
 			generateLoss();
 		}
@@ -179,7 +179,7 @@ $(document).ready(function() {
 		incorrect++;
 		var wrongAnswerText = "<h1 class='wrongText'>INCORRECT!</h1><br>";
 		var wrongAnswerImage = "<img class='answerImage' src='./assets/images/incorrect.png'><br>";
-		var rightAnswer = "<p>The correct answer is: " + questionArray[questionCounter].correctText + "</p><br>";
+		var rightAnswer = "<p class='rightAnswer'>The correct answer is: " + questionArray[questionCounter].correctText + "</p><br>";
 		gameHTML = wrongAnswerText + rightAnswer + wrongAnswerImage;
 		$(".mainArea").html(gameHTML);
 		setTimeout(nextQuestion, 4000); 
