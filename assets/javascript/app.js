@@ -113,6 +113,14 @@ $(document).ready(function() {
 		}
 	];
 	
+	//Generates the start button and initial screen
+	function initialScreen() {
+		var initialText = "<h1>Test your passion for FASHION!</h1><br><p>There will be 10 questions and you will have 20 seconds to answer each one of the them. Good luck!</p><br>";
+		var startButtonHTML = "<button class='startButton btn btn-secondary' type='button'>Start Quiz</button>";
+		startScreen = initialText + startButtonHTML;
+		$(".mainArea").html(startScreen);
+	}
+
 	//Generates trivia questions
 	function generateHTML() {
 		var timeRemainingText = "<h2>Time Remaining: <span id='timer'>20</span></h2><br>";
@@ -127,6 +135,34 @@ $(document).ready(function() {
 			$(".mainArea").append(answerButton);
 		}
 	}
+
+	//Timer 
+	function timer() {
+		clock = setInterval(twentySeconds, 1000);
+		function twentySeconds() {
+			if (counter === 0) {
+				clearInterval(clock);
+				generateTimeOut();
+			} else if (counter > 0) {
+				counter--;
+			}
+			$("#timer").html(counter);
+		}
+	}
+
+	//Function executed upon clicking of an answer button
+	$("body").on("click", ".answer", function(){
+		selectedAnswer = $(this).attr("isCorrect");
+
+		if (selectedAnswer === "true") { // evaluates if this is the correct answer
+			clearInterval(clock);
+		 	generateWin();
+		} else { 	// then it's the wrong answer
+			clearInterval(clock);
+			generateLoss();
+		}
+
+	}); 
 
 	//Generates html if user choses correct answer
 	function generateWin() {
@@ -159,20 +195,6 @@ $(document).ready(function() {
 		setTimeout(nextQuestion, 4000);  
 	}
 
-	//Timer 
-	function timer() {
-		clock = setInterval(twentySeconds, 1000);
-		function twentySeconds() {
-			if (counter === 0) {
-				clearInterval(clock);
-				generateTimeOut();
-			} else if (counter > 0) {
-				counter--;
-			}
-			$("#timer").html(counter);
-		}
-	}
-
 	//Generates next question
 	function nextQuestion() {
 		if (questionCounter < questionArray.length - 1) {
@@ -185,34 +207,6 @@ $(document).ready(function() {
 		}
 	}
 
-	//Generates the start button and initial screen
-	function initialScreen() {
-		var initialText = "<h1>Test your passion for FASHION!</h1><br><p>There will be 10 questions and you will have 20 seconds to answer each one of the them. Good luck!</p><br>";
-		var startButtonHTML = "<button class='startButton btn btn-secondary' type='button'>Start Quiz</button>";
-		startScreen = initialText + startButtonHTML;
-		$(".mainArea").html(startScreen);
-	}
-
-	//Function executed upon clicking of the start button
-	$("body").on("click", ".startButton", function(){ 
-		generateHTML();
-		timer();
-	});
-
-	//Function executed upon clicking of an answer button
-	$("body").on("click", ".answer", function(){
-		selectedAnswer = $(this).attr("isCorrect");
-
-		if (selectedAnswer === "true") { // evaluates if this is the correct answer
-			clearInterval(clock);
-		 	generateWin();
-		} else { 	// then it's the wrong answer
-			clearInterval(clock);
-			generateLoss();
-		}
-
-	}); 
-
 	//Generates final results
 	function results() {
 		var resultsText = "<h2>Here is your results!</h2><br>";
@@ -223,6 +217,11 @@ $(document).ready(function() {
 		gameHTML = resultsText + correctAnswers + wrongAnswers + notAnswered + playAgain;
 		$(".mainArea").html(gameHTML);
 	}
+
+	//Function executed upon clicking of the "Play Again" button
+	$("body").on("click", ".resetButton", function(){
+		resetGame();
+	}); 
 
 	//Resets Trivia Quizz
 	function resetGame() {
@@ -235,11 +234,13 @@ $(document).ready(function() {
 		timer();
 	}
 
-	//Function executed upon clicking of the "Play Again" button
-	$("body").on("click", ".resetButton", function(){
-		resetGame();
-	}); 
+	//Function executed upon clicking of the start button
+	$("body").on("click", ".startButton", function(){ 
+		generateHTML();
+		timer();
+	});
 
+	//Generate the initial screen
 	initialScreen();
 
 });  
