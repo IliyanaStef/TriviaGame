@@ -1,0 +1,15 @@
+body {
+    background: url("../images/background.jpg");
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+}
+ .mainArea {
+     background: pink;
+     padding: 20px;
+ }
+
+ .answerImage {
+     width: 300px;
+     height: 300px;
+ }
