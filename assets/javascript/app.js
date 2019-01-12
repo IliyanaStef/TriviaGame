@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
 //Global variables and question array
 	var startScreen;
 	var gameHTML;
@@ -115,8 +115,8 @@ $(document).ready(function() {
 	
 	//Generates trivia questions
 	function generateHTML() {
-		var timeRemainingText = "<h2>Time Remaining: <span id='timer'>20</span></h2>";
-		var questionText = "<p>" + questionArray[questionCounter].question + "</p>";
+		var timeRemainingText = "<h2>Time Remaining: <span id='timer'>20</span></h2><br>";
+		var questionText = "<p>" + questionArray[questionCounter].question + "</p><br>";
 		gameHTML = timeRemainingText + questionText;
 		$(".mainArea").html(gameHTML);
 		for (var i = 0; i < questionArray[questionCounter].answers.length; i++) {
@@ -131,19 +131,19 @@ $(document).ready(function() {
 	//Generates html if user choses correct answer
 	function generateWin() {
 		correct++;
-		var correctAnswerText = "<h1 class='correctText'>CORRECT!</h>";
+		var correctAnswerText = "<h1 class='correctText'>CORRECT!</h><br>";
 		var correctAnswerImage = questionArray[questionCounter].image;
 		gameHTML = correctAnswerText + correctAnswerImage;
 		$(".mainArea").html(gameHTML);
 		setTimeout(nextQuestion, 4000);  
 	}
 
-	//generates html if user choses incorrect asnwer
+	//Generates html if user choses incorrect asnwer
 	function generateLoss() {
 		incorrect++;
-		var wrongAnswerText = "<h1 class='wrongText'>INCORRECT</h1>";
-		var wrongAnswerImage = "<img class='answerImage' src='./assets/images/wrong.jpg'>";
-		var rightAnswer = "<p>The correct answer is: " + questionArray[questionCounter].correctText + "</p>";
+		var wrongAnswerText = "<h1 class='wrongText'>INCORRECT!</h1><br>";
+		var wrongAnswerImage = "<img class='answerImage' src='./assets/images/incorrect.png'><br>";
+		var rightAnswer = "<p>The correct answer is: " + questionArray[questionCounter].correctText + "</p><br>";
 		gameHTML = wrongAnswerText + rightAnswer + wrongAnswerImage;
 		$(".mainArea").html(gameHTML);
 		setTimeout(nextQuestion, 4000); 
@@ -152,8 +152,9 @@ $(document).ready(function() {
 	//Generates html if time runs out
 	function generateTimeOut() {
 		unanswered++;
-		var timeOutText = "<h1 class='timeOutText'>TIME'S UP!</h1>";
-		gameHTML =  timeOutText;
+		var timeOutText = "<h1 class='timeOutText'>TIME'S UP!</h1><br>";
+		var timeOutImage = "<img class='answerImage' src='./assets/images/timeout.png'><br>";
+		gameHTML =  timeOutText + timeOutImage;
 		$(".mainArea").html(gameHTML);
 		setTimeout(nextQuestion, 4000);  
 	}
@@ -184,31 +185,9 @@ $(document).ready(function() {
 		}
 	}
 
-	//Generates final results
-	function results() {
-		var resultsText = "<h2>Here is your results!</h2>";
-		var correctAnswers = "<p>Correct Answers: " + correct + "</p>";
-		var wrongAnswers = "<p>Wrong Answers: " + incorrect + "</p>";
-		var notAnswered = "<p>Unanswered: " + unanswered + "</p>";
-		var playAgain = "<button class='resetButton btn btn-secondary' type='button'>PLAY AGAIN</button>";
-		gameHTML = resultsText + correctAnswers + wrongAnswers + notAnswered + playAgain;
-		$(".mainArea").html(gameHTML);
-	}
-
-	//Resets Trivia Quizz
-	function resetGame() {
-		questionCounter = 0;
-		correct = 0;
-		incorrect = 0;
-		unanswered = 0;
-		counter = 20;
-		generateHTML();
-		timer();
-	}
-
 	//Generates the start button and initial screen
 	function initialScreen() {
-		var initialText = "<h1>Test your passion for FASHION!</h1><br><p>There are 10 questions total and you will have 20 seconds to answer each one of the them. Good luck!</p>";
+		var initialText = "<h1>Test your passion for FASHION!</h1><br><p>There will be 10 questions and you will have 20 seconds to answer each one of the them. Good luck!</p><br>";
 		var startButtonHTML = "<button class='startButton btn btn-secondary' type='button'>Start Quiz</button>";
 		startScreen = initialText + startButtonHTML;
 		$(".mainArea").html(startScreen);
@@ -233,6 +212,28 @@ $(document).ready(function() {
 		}
 
 	}); 
+
+	//Generates final results
+	function results() {
+		var resultsText = "<h2>Here is your results!</h2><br>";
+		var correctAnswers = "<p>Correct Answers: " + correct + "</p>";
+		var wrongAnswers = "<p>Wrong Answers: " + incorrect + "</p>";
+		var notAnswered = "<p>Unanswered: " + unanswered + "</p><br>";
+		var playAgain = "<button class='resetButton btn btn-secondary' type='button'>PLAY AGAIN</button>";
+		gameHTML = resultsText + correctAnswers + wrongAnswers + notAnswered + playAgain;
+		$(".mainArea").html(gameHTML);
+	}
+
+	//Resets Trivia Quizz
+	function resetGame() {
+		questionCounter = 0;
+		correct = 0;
+		incorrect = 0;
+		unanswered = 0;
+		counter = 20;
+		generateHTML();
+		timer();
+	}
 
 	//Function executed upon clicking of the "Play Again" button
 	$("body").on("click", ".resetButton", function(){
