@@ -3,6 +3,7 @@ body {
     font-size: 18px;
     font-family: 'Raleway', sans-serif;
     text-align: center;
+    padding: 0px;
 }
  .mainArea {
      background: pink;
@@ -15,11 +16,15 @@ body {
  }
  
  .mainArea {
-     width: 380px;
+    width: 385px;
  }
 
  .rightAnswer {
      font-weight: bold;
      font-size: 20px;
+ }
+
+ .row {
+    display: block;
  }
 
